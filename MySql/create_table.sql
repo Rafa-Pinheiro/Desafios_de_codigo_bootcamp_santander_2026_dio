@@ -89,3 +89,37 @@ SELECT * FROM viagens.usuarios_new;
 DROP TABLE viagens.usuarios;
 RENAME TABLE viagens.usuarios_new TO viagens.usuarios;
 ALTER TABLE viagens.usuarios MODIFY COLUMN email VARCHAR(150) NOT NULL UNIQUE;
+
+ALTER TABLE viagens.reservas 
+    ADD CONSTRAINT id_usuario 
+        FOREIGN KEY (ID_USUARIO) 
+        REFERENCES viagens.usuarios(id),
+    ADD CONSTRAINT id_destino 
+        FOREIGN KEY (ID_DESTINO) 
+        REFERENCES viagens.destinos(id);
+
+ALTER TABLE viagens.reservas
+    ADD CONSTRAINT fk_reservas_usuario
+        FOREIGN KEY (id_usuario)
+        REFERENCES viagens.usuarios(id)
+        ON DELETE CASCADE,
+    ADD CONSTRAINT fk_reservas_destino
+        FOREIGN KEY (id_destino)
+        REFERENCES viagens.destinos(id)
+        ON DELETE CASCADE;
+
+INSERT INTO viagens.reservas (id_usuario, id_destino, data, status) VALUES
+(1, 2, "2023-10-15", "CONFIRMADA"),
+(3, 5, "2023-11-20", "PENDENTE"),
+(4, 1, "2023-12-05", "CANCELADA"),
+(5, 3, "2024-01-10", "CONFIRMADA"),
+(6, 4, "2024-02-14", "PENDENTE"),
+(7, 6, "2024-03-22", "CONFIRMADA"),
+(8, 7, "2024-04-18", "CANCELADA"),
+(9, 8, "2024-05-30", "PENDENTE"),
+(10, 9, "2024-06-12", "CONFIRMADA");
+
+SELECT * FROM viagens.reservas;
+DELETE FROM viagens.usuarios WHERE id = 3;
+SELECT * FROM viagens.reservas;
+
