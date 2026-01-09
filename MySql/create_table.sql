@@ -72,4 +72,20 @@ SELECT COUNT(*) AS total_usuarios FROM viagens.usuarios;
 UPDATE viagens.usuarios SET endereco = "Avenida das Américas, 500" WHERE nome = "Bruno Costa";
 DELETE FROM viagens.usuarios WHERE email = "bruno.costa@email.com";
 
+CREATE TABLE IF NOT EXISTS  viagens.usuarios_new (
+	id INT PRIMARY KEY AUTO_INCREMENT COMMENT "IDENTIFICADOR UNICO DO USUÁRIO",
+    nome VARCHAR (255) NOT NULL COMMENT "NOME DO USUÁRIO",
+    email VARCHAR (255) NOT NULL UNIQUE COMMENT "EMAIL EXCLUSIVO DO USUÁRIO",
+    endereco VARCHAR (100) NOT NULL COMMENT "ENDEREÇO DO USUÁRIO",
+    data_de_nascimento DATE NOT NULL COMMENT "DATA DE NASCIMENTO DO USUÁRIO"
+);
 
+INSERT IGNORE INTO viagens.usuarios_new (nome, email, endereco, data_de_nascimento) 
+SELECT nome, email, endereco, data_de_nascimento 
+FROM viagens.usuarios;
+
+SELECT * FROM viagens.usuarios_new;
+
+DROP TABLE viagens.usuarios;
+RENAME TABLE viagens.usuarios_new TO viagens.usuarios;
+ALTER TABLE viagens.usuarios MODIFY COLUMN email VARCHAR(150) NOT NULL UNIQUE;
