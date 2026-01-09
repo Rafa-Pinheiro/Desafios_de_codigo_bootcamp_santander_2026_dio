@@ -65,3 +65,11 @@ INSERT IGNORE INTO viagens.destinos (nome, descricao) VALUES
 ("Praga", "Uma cidade encantadora com arquitetura gótica, pontes históricas e uma rica herança cultural."),
 ("Moscou", "Conhecida por sua arquitetura impressionante, história rica e vida cultural vibrante.");
 
+SELECT nome FROM destinos WHERE nome LIKE '%RI%';
+SELECT * FROM viagens.usuarios WHERE data_de_nascimento BETWEEN '1990-01-01' AND '1995-12-31';
+SELECT COUNT(*) AS total_usuarios FROM viagens.usuarios;
+
+UPDATE viagens.usuarios SET endereco = "Avenida das Américas, 500" WHERE nome = "Bruno Costa";
+DELETE FROM viagens.usuarios WHERE email = "bruno.costa@email.com";
+
+
