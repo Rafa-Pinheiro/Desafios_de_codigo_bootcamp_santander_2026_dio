@@ -178,3 +178,26 @@ SELECT * FROM viagens.usuarios us
 SELECT * FROM viagens.reservas rs
     RIGHT JOIN viagens.destinos ds
     ON rs.id_destino = ds.id;
+
+-- Subconsultas ou consultas aninhadas --
+
+SELECT nome FROM viagens.destinos
+    WHERE id 
+    IN 
+        (SELECT id_destino 
+        FROM viagens.reservas 
+        WHERE status = "CONFIRMADA");
+
+SELECT nome, email FROM viagens.usuarios
+    WHERE id 
+    NOT IN 
+        (SELECT id_usuario 
+        FROM viagens.reservas 
+        WHERE data > "2024-01-01");
+
+SELECT nome,
+        (SELECT COUNT(*) 
+            FROM viagens.reservas rs 
+            WHERE rs.id_usuario = us.id) AS total_reservas
+    FROM viagens.usuarios us;
+
