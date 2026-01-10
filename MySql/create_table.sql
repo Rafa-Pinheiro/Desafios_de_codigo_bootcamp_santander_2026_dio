@@ -141,3 +141,40 @@ UPDATE viagens.usuarios
 ALTER TABLE viagens.usuarios
     DROP COLUMN endereco;
 
+-- Já estamos na 2NF, pois todos os atributos não-chave dependem da chave primária (id).
+
+-- Já estamos na 3NF, pois não há dependências transitivas entre os atributos não-chave.
+
+-- AGORA VAMOS AS CONSULTAS AVANÇADAS
+
+-- Joins
+
+-- INNER JOIN -- 
+
+SELECT * FROM viagens.usuarios us
+    JOIN viagens.reservas rs
+    ON us.id = rs.id_usuario
+    INNER JOIN viagens.destinos ds
+    ON rs.id_destino = ds.id;
+
+INSERT IGNORE INTO  viagens.usuarios (nome, email, data_de_nascimento, rua, numero, cidade, estado) VALUES
+("Ana Silva", "ana.silva@email.com", "1990-05-15", "Rua das Flores", "123", "São Paulo", "SP"),
+("Carlos Oliveira", "carlos.oliveira@email.com", "1985-08-22", "Avenida Paulista", "456", "São Paulo", "SP"),
+("Mariana Santos", "mariana.santos@email.com", "1992-12-30", "Travessa do Sol", "789", "Rio de Janeiro", "RJ"),
+("Pedro Almeida", "pedro.almeida@email.com", "1988-03-10", "Praça da Liberdade", "321", "Belo Horizonte", "MG"),
+("Juliana Costa", "juliana.costa@email.com", "1995-07-25", "Rua do Comércio", "654", "", "BA"),
+("Lucas Ferreira", "lucas.ferreira@email.com", "1993-11-08", "Rua das Palmeiras", "987", "Curitiba", "PR");
+
+SELECT * FROM viagens.usuarios us
+    INNER JOIN viagens.reservas rs
+    ON us.id = rs.id_usuario;
+
+-- LEFT JOIN --
+SELECT * FROM viagens.usuarios us
+    LEFT JOIN viagens.reservas rs
+    ON us.id = rs.id_usuario;
+
+-- RIGHT JOIN --
+SELECT * FROM viagens.reservas rs
+    RIGHT JOIN viagens.destinos ds
+    ON rs.id_destino = ds.id;
