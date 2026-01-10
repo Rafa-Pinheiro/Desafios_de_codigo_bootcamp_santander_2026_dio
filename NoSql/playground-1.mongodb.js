@@ -237,5 +237,49 @@ db.reservas.findOneAndDelete(
   { "usuario_id": ObjectId("6562b6d56636c5455aeb53d2") }
 );
 
+//Update
 
+db.usuarios.updateOne(
+  { "nome": "Camila Oliveira" },
+  { $set: [{ "interesses": "viagem" }] }
+);
 
+db.destinos.updateMany(
+  { "pais": "Brasil" },
+  { $push: { "descricao": "Destino turístico popular no Brasil." } }
+);
+
+// Delete
+
+db.usuarios.deleteOne({ "nome": "Diego Fernandes" });
+
+db.destinos.deleteMany({ "pais": "Espanha" });
+
+// Consultas avançadas
+db.usuarios.find({ "interesses": "tecnologia" , "idade": { $gt: 30 } });
+
+db.usuarios.find({$and: [ { "interesses": "tecnologia" }, { "idade": { $gt: 30 } } ] });
+
+db.usuarios.find({$or: [ { "interesses": "tecnologia" }, { "idade": { $gt: 30 } } ] });
+
+db.destinos.find({ "pais": { $in: ["França", "Japão"] } });
+
+db.reservas.find({ "data": { $gte: "2021-01-01" } });
+
+db.reservas.find({ "data": { $lt: "2021-01-01" } });
+
+db.usuarios.find({$or: [{"endereco.cidade": "São Paulo"}, {"endereco.cidade": "Rio de Janeiro"}]});
+
+db.usuarios.find({"endereco.cidade": { $nin: ["Espirito Santo", "Itanhaém"] }});
+
+//Selecionando os Campos a serem retornados
+db.usuarios.find({"endereco.cidade": { $in: ["ABC", "Itanhaém"] }}, {"nome": 1, "endereco.cidade": 1, _id: 0});
+
+//Sort
+db.usuarios.find({},{"nome": 1, "idade": 1, _id: 0}).sort({"idade": -1});
+
+db.usuarios.find({},{"nome": 1, "idade": 1, _id: 0}).sort({"idade": 1});
+
+//Limit
+use("viagens");
+db.destinos.find({},{"nome": 1, _id: 0}).limit(3);
