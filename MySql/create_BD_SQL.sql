@@ -249,3 +249,47 @@ SELECT COUNT(*) AS qtd_reservas, id_destino
     GROUP BY id_destino
     ORDER BY qtd_reservas, id_destino DESC;
 
+-- INDEXAÇÃO --
+
+INSERT IGNORE INTO  viagens.usuarios (nome, email, data_de_nascimento, rua, numero, cidade, estado) VALUES
+("Ana Silva", "ana.silva@email.com", "1990-05-15", "Rua das Flores", "123", "São Paulo", "SP"),
+("Carlos Oliveira", "carlos.oliveira@email.com", "1985-08-22", "Avenida Paulista", "456", "São Paulo", "SP"),
+("Mariana Santos", "mariana.santos@email.com", "1992-12-30", "Travessa do Sol", "789", "Rio de Janeiro", "RJ"),
+("Pedro Almeida", "pedro.almeida@email.com", "1988-03-10", "Praça da Liberdade", "321", "Belo Horizonte", "MG"),
+("Juliana Costa", "juliana.costa@email.com", "1995-07-25", "Rua do Comércio", "654", "", "BA"), 
+("Lucas Ferreira", "lucas.ferreira@email.com", "1993-11-08", "Rua das Palmeiras", "987", "Curitiba", "PR"),
+("Marcos Vinicius", "marcos.vinicius@email.com", "1991-09-12", "Rua do Comércio", "321", "Porto Alegre", "RS"),
+("Fernanda Lima", "fernanda.lima@email.com", "1994-02-28", "Avenida Brasil", "555", "Salvador", "BA"),
+("Tiago Souza", "tiago.souza@email.com", "1990-06-18", "Rua das Acácias", "777", "Brasília", "DF"), 
+("Patrícia Gomes", "patricia.gomes@email.com", "1996-04-14", "Travessa do Sol", "888", "Fortaleza", "CE"),
+("Renato Barros", "renato.barros@email.com", "1989-10-20", "Avenida Central", "111", "Manaus", "AM"),
+("Aline Ribeiro", "aline.ribeiro@email.com", "1992-07-05", "Rua das Acácias", "444", "Recife", "PE"),
+("Bruna Teixeira", "bruna.teixeira@email.com", "1993-01-22", "Rua das Acácias", "444", "Recife", "PE"),
+("Diego Fernandes", "diego.fernandes@email.com", "1990-08-15", "Rua das Acácias", "444", "Recife", "PE"),
+("Elisa Moreira", "elisa.moreira@email.com", "1990-04-12", "Rua das Acácias", "444", "Recife", "PE"),
+("Fábio Cardoso", "fabio.cardoso@email.com", "1990-02-28", "Rua das Acácias", "444", "Recife", "PE"),
+("Gisele Nascimento", "gisele.nascimento@email.com", "1990-01-15", "Rua das Acácias", "444", "Recife", "PE"),   
+("Heitor Alves", "heitor.alves@email.com", "1990-03-15", "Rua das Acácias", "444", "Recife", "PE");
+
+SELECT COUNT(*) AS total_usuarios FROM viagens.usuarios;
+
+EXPLAIN SELECT * 
+        FROM viagens.usuarios
+        WHERE email = "ana.silva@email.com";
+
+CREATE INDEX idx_email ON viagens.usuarios(email);
+
+EXPLAIN SELECT * 
+        FROM viagens.usuarios
+        WHERE email = "ana.silva@email.com";
+
+EXPLAIN SELECT *
+		FROM viagens.usuarios
+		WHERE nome = "Bruno Costa";
+
+CREATE INDEX idx_nome ON viagens.usuarios(nome);
+
+EXPLAIN SELECT *
+		FROM viagens.usuarios
+		WHERE nome = "Bruno Costa";
+
