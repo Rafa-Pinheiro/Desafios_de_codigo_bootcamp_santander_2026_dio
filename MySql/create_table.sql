@@ -236,3 +236,16 @@ SELECT COUNT(*), id FROM viagens.reservas
 
 SELECT COUNT(*), id FROM viagens.reservas
     GROUP BY id_destino;
+
+-- Ordenação de resultados --
+SELECT * FROM viagens.usuarios
+    ORDER BY nome ASC;
+
+SELECT * FROM viagens.reservas
+    ORDER BY data DESC;
+
+SELECT COUNT(*) AS qtd_reservas, id_destino 
+    FROM viagens.reservas
+    GROUP BY id_destino
+    ORDER BY qtd_reservas, id_destino DESC;
+
