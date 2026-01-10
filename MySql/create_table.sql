@@ -201,3 +201,38 @@ SELECT nome,
             WHERE rs.id_usuario = us.id) AS total_reservas
     FROM viagens.usuarios us;
 
+-- Funções agregadas --
+
+SELECT COUNT(*) AS total_usuarios FROM viagens.usuarios;
+
+SELECT COUNT(*) AS total_usuarios 
+    FROM viagens.usuarios us
+    INNER JOIN viagens.reservas rs
+    ON us.id = rs.id_usuario
+    WHERE rs.status = "CONFIRMADA";
+
+
+SELECT MAX(TIMESTAMPDIFF(
+            YEAR, data_de_nascimento, CURDATE())) 
+        AS maior_idade
+        FROM viagens.usuarios;
+
+SELECT MIN(TIMESTAMPDIFF(
+            YEAR, data_de_nascimento, CURDATE())) 
+        AS menor_idade
+        FROM viagens.usuarios;
+
+SELECT AVG(TIMESTAMPDIFF(
+            YEAR, data_de_nascimento, CURDATE())) AS media_idade
+        FROM viagens.usuarios;
+
+SELECT COUNT(*) AS total_reservas, status 
+    FROM viagens.reservas
+    GROUP BY status;
+
+SELECT COUNT(*), id FROM viagens.reservas
+    GROUP BY id_destino
+    HAVING COUNT(*) > 2;
+
+SELECT COUNT(*), id FROM viagens.reservas
+    GROUP BY id_destino;
