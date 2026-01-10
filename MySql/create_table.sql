@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS  viagens.destinos (
     descricao VARCHAR (255) NOT NULL COMMENT "Descrição do destino"
 );
 
+
 CREATE TABLE IF NOT EXISTS viagens.reservas (
 	id INT PRIMARY KEY AUTO_INCREMENT COMMENT "IDENTIFICADOR UNICO DA RESERVA",
     id_usuario INT COMMENT "CHAVE ESTRANGEIRA DO USUÁRIO QUE FEZ A RESERVA", 
@@ -23,26 +24,26 @@ CREATE TABLE IF NOT EXISTS viagens.reservas (
     status VARCHAR (255) DEFAULT "PENDENTE" COMMENT "STATUS DA RESERVA (CONFIRMADA, PENDENTE, CANCELADA, ETC.)"
 );
 
-INSERT INTO IF NOT EXISTS viagens.usuarios (nome, email, endereco, data_de_nascimento) VALUES 
-("Ana Silva", "ana.silva@email.com", "Rua das Flores, 123", "1990-05-15"),
-("Bruno Costa", "bruno.costa@email.com", "Avenida Paulista, 456", "1985-08-22"),
-("Carla Mendes", "carla.mendes@email.com", "Travessa das Rosas, 789", "1992-12-03"),
-("Daniel Oliveira", "daniel.oliveira@email.com", "Praça da Liberdade, 101", "1988-03-10"),
-("Eduarda Ferreira", "eduarda.ferreira@email.com", "Alameda dos Anjos, 202", "1995-07-07"),
-("Felipe Gomes", "felipe.gomes@email.com", "Rua das Palmeiras, 303", "1991-11-20"),
-("Gabriela Rocha", "gabriela.rocha@email.com", "Praça das Flores, 404", "1993-09-18"),
-("Hugo Santos", "hugo.santos@email.com", "Rua das Flores, 505", "1994-02-28"),
-("Isabela Almeida", "isabela.almeida@email.com", "Rua das Flores, 606", "1992-04-12"),
-("João Pereira", "joao.pereira@email.com", "Rua das Flores, 707", "1990-06-15"),
-("Karina Souza", "karina.souza@email.com", "Rua das Flores, 808", "1993-01-25"),
-("Lucas Ribeiro", "lucas.ribeiro@email.com", "Rua das Flores, 909", "1994-08-18"),
-("Mariana Lima", "mariana.lima@email.com", "Rua das Flores, 1010", "1992-07-20"),
-("Nicolas Fernandes", "nicolas.fernandes@email.com", "Rua das Flores, 1111", "1990-09-05"),
-("Olivia Martins", "olivia.martins@email.com", "Rua das Flores, 1212", "1993-05-10"),
-("Pedro Carvalho", "pedro.carvalho@email.com", "Rua das Flores, 1313", "1992-03-15"),
-("Quintina Dias", "quintina.dias@email.com", "Rua das Flores, 1414", "1990-12-05"),
-("Rafael Nunes", "rafael.nunes@email.com", "Rua das Flores, 1515", "1991-04-20"),
-("Sofia Castro", "sofia.castro@email.com", "Rua das Flores, 1616", "1992-08-08");
+INSERT IGNORE INTO  viagens.usuarios (nome, email, endereco, data_de_nascimento) VALUES 
+("Ana Silva", "ana.silva@email.com", "Rua das Flores, 123, Santos, SP", "1990-05-15"),
+("Bruno Costa", "bruno.costa@email.com", "Avenida Paulista, 456, São Paulo, SP", "1985-08-22"),
+("Carla Mendes", "carla.mendes@email.com", "Travessa das Rosas, 789, Rio de Janeiro, RJ", "1992-12-03"),
+("Daniel Oliveira", "daniel.oliveira@email.com", "Praça da Liberdade, 101, Belo Horizonte, MG", "1988-03-10"),
+("Eduarda Ferreira", "eduarda.ferreira@email.com", "Alameda dos Anjos, 202, Salvador, BA", "1995-07-07"),
+("Felipe Gomes", "felipe.gomes@email.com", "Rua das Palmeiras, 303, Recife, PE", "1991-11-20"),
+("Gabriela Rocha", "gabriela.rocha@email.com", "Praça das Flores, 404, São Paulo, SP", "1993-09-18"),
+("Hugo Santos", "hugo.santos@email.com", "Rua das Flores, 505, Rio de Janeiro, RJ", "1994-02-28"),
+("Isabela Almeida", "isabela.almeida@email.com", "Rua das Flores, 606, Belo Horizonte, MG", "1992-04-12"),
+("João Pereira", "joao.pereira@email.com", "Rua das Flores, 707, Salvador, BA", "1990-06-15"),
+("Karina Souza", "karina.souza@email.com", "Rua das Flores, 808, Recife, PE", "1993-01-25"),
+("Lucas Ribeiro", "lucas.ribeiro@email.com", "Rua das Flores, 909, São Paulo, SP", "1994-08-18"),
+("Mariana Lima", "mariana.lima@email.com", "Rua das Flores, 1010, Rio de Janeiro, RJ", "1992-07-20"),
+("Nicolas Fernandes", "nicolas.fernandes@email.com", "Rua das Flores, 1111, Belo Horizonte, MG", "1990-09-05"),
+("Olivia Martins", "olivia.martins@email.com", "Rua das Flores, 1212, Salvador, BA", "1993-05-10"),
+("Pedro Carvalho", "pedro.carvalho@email.com", "Rua das Flores, 1313, Recife, PE", "1992-03-15"),
+("Quintina Dias", "quintina.dias@email.com", "Rua das Flores, 1414, São Paulo, SP", "1990-12-05"),
+("Rafael Nunes", "rafael.nunes@email.com", "Rua das Flores, 1515, Rio de Janeiro, RJ", "1991-04-20"),
+("Sofia Castro", "sofia.castro@email.com", "Rua das Flores, 1616, Belo Horizonte, MG", "1992-08-08");
 
 INSERT IGNORE INTO viagens.destinos (nome, descricao) VALUES 
 ("Paris", "A cidade das luzes e do amor, famosa por sua arquitetura icônica e cultura rica."),
@@ -122,4 +123,21 @@ INSERT INTO viagens.reservas (id_usuario, id_destino, data, status) VALUES
 SELECT * FROM viagens.reservas;
 DELETE FROM viagens.usuarios WHERE id = 3;
 SELECT * FROM viagens.reservas;
+
+--PRIMEIRA FORMA NORMAL
+--1NF: Eliminar grupos repetitivos, garantindo que cada campo contenha apenas valores atômicos.
+ALTER TABLE viagens.usuarios
+    ADD rua VARCHAR(100),
+    ADD numero VARCHAR(10),
+    ADD cidade VARCHAR(50) DEFAULT "Não informadado",
+    ADD estado VARCHAR(50) DEFAULT "Não informado";
+    
+UPDATE viagens.usuarios
+    SET rua = SUBSTRING_INDEX(endereco, ',', 1),
+        numero = TRIM(SUBSTRING_INDEX(SUBSTRING_INDEX(endereco, ',', -1), ' ', 1)),
+        cidade = TRIM(SUBSTRING_INDEX(SUBSTRING_INDEX(endereco, ',', -2), ',', 1)),
+        estado = TRIM(SUBSTRING_INDEX(endereco, ',', -1));
+
+ALTER TABLE viagens.usuarios
+    DROP COLUMN endereco;
 
