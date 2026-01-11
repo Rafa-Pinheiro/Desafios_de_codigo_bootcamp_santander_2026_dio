@@ -1,0 +1,29 @@
+#Rafaela da Silva Pinheiro
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+df_diabetes = pd.read_csv('diabetes.csv')
+
+#1)
+df_diabetes.loc[:,['MesDeGestação']].value_counts()
+print(df_diabetes.loc[:,['MesDeGestação']].value_counts())
+
+#2)
+print(df_diabetes.loc[df_diabetes['Glicose']>=120].describe())
+
+#3)
+print(df_diabetes.loc[df_diabetes['Resultado']==1].shape)
+
+#4)
+print(df_diabetes.loc[df_diabetes['Resultado']==0].shape)
+
+#5)
+aux = df_diabetes.loc[df_diabetes['Resultado']==1]
+print(aux.loc[df_diabetes['IMC']>= 29.9].shape)
+
+#6)
+aux = df_diabetes.loc[df_diabetes['Resultado']==1]
+aux = aux.loc[df_diabetes['IMC']>= 26.9]
+print(aux.loc[df_diabetes['Pressão']>=90].shape)
