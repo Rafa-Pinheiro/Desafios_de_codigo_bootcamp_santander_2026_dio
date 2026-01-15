@@ -5,7 +5,7 @@ import openai
 
 
 
-openai_api_key = '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'
+openai_api_key = '#coloque_sua_api_key_aqui#'
 api_url = "https://sdw-2023-prd.up.railway.app"
 
 openai.api_key = openai_api_key
