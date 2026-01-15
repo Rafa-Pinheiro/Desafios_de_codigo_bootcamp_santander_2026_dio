@@ -61,3 +61,10 @@ def update_user(user, api_url=api_url):
 for user in users:
   success = update_user(user)
   print(f"User {user['name']} updated? {success}")
+
+
+# --- Printando os dados atualizados ---
+for id in user_ids:
+    user = get_user(id)
+    if user:
+        print(json.dumps(user, indent=2, ensure_ascii=False))
