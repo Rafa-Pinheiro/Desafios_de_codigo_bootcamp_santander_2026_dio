@@ -53,3 +53,11 @@ for user in users:
   user['news'].append({"icon": "https://digitalinnovationone.github.io/santander-dev-week-2023-api/icons/credit.svg",
       "description": news})
 
+# --- Fazendo o update na API ---
+def update_user(user, api_url=api_url):
+  response = requests.put(f"{api_url}/users/{user['id']}", json=user)
+  return True if response.status_code == 200 else False
+
+for user in users:
+  success = update_user(user)
+  print(f"User {user['name']} updated? {success}")
